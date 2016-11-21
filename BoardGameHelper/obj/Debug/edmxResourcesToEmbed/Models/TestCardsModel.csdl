@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GamesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TestCard">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsDrawn" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="GamesDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TestCards" EntityType="Self.TestCard" />
+    <EntitySet Name="Cards" EntityType="GamesDBModel.Card" />
+    <EntitySet Name="Types" EntityType="GamesDBModel.Type" />
+  </EntityContainer>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Text" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Asset" BaseType="GamesDBModel.Card">
+    <Property Name="Cost" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Spell" BaseType="GamesDBModel.Card">
+    <Property Name="ReverseText" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Condition" BaseType="GamesDBModel.Card">
+    <Property Name="ReverseText" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Artifact" BaseType="GamesDBModel.Card" />
+</Schema>

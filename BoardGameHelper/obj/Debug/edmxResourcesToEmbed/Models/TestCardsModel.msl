@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GamesDBModelStoreContainer" CdmEntityContainer="GamesDBEntities">
+    <EntitySetMapping Name="TestCards">
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.TestCard)">
+        <MappingFragment StoreEntitySet="TestCards">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CardName" ColumnName="CardName" />
+          <ScalarProperty Name="IsDrawn" ColumnName="IsDrawn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cards">
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.Card)">
+        <MappingFragment StoreEntitySet="Cards">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.Asset)">
+        <MappingFragment StoreEntitySet="Cards_Asset">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.Spell)">
+        <MappingFragment StoreEntitySet="Cards_Spell">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReverseText" ColumnName="ReverseText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

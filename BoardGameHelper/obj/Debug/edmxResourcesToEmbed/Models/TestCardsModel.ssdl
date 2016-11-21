@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GamesDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GamesDBModelStoreContainer">
+    <EntitySet Name="TestCards" EntityType="GamesDBModel.Store.TestCards" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards" EntityType="GamesDBModel.Store.Cards" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards_Asset" EntityType="GamesDBModel.Store.Cards_Asset" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards_Spell" EntityType="GamesDBModel.Store.Cards_Spell" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Asset_inherits_Card" Association="GamesDBModel.Store.FK_Asset_inherits_Card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Asset" EntitySet="Cards_Asset" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Spell_inherits_Card" Association="GamesDBModel.Store.FK_Spell_inherits_Card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Spell" EntitySet="Cards_Spell" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TestCards">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CardName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsDrawn" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards_Asset">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Cost" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards_Spell">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="ReverseText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Asset_inherits_Card">
+    <End Role="Card" Type="GamesDBModel.Store.Cards" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asset" Type="GamesDBModel.Store.Cards_Asset" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Asset">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Spell_inherits_Card">
+    <End Role="Card" Type="GamesDBModel.Store.Cards" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Spell" Type="GamesDBModel.Store.Cards_Spell" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Spell">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

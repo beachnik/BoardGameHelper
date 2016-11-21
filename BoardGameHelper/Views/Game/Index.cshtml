@@ -1,0 +1,42 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+    <button id="DrawCard" onclick="DrawACard()">Draw a Card</button>
+    <button id="ResetDeck" onclick="ResetDeck()">Reset the deck</button>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    function DrawACard() {
+        $.ajax({
+            url: "@(Url.Action("DrawCard", "Game"))",
+            type: "POST",
+        cache: false,
+        async: true,
+        success: function (data) {
+            alert(data);
+        }
+    });
+    }
+
+    function ResetDeck() {
+        $.ajax({
+            url: "@(Url.Action("ResetDeck", "Game"))",
+            type: "POST",
+            cache: false,
+            async: true,
+            success: function (data) {
+                alert("Deck reset");
+            }
+        })
+    }
+</script>

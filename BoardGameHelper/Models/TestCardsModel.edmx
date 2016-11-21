@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GamesDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GamesDBModelStoreContainer">
+    <EntitySet Name="TestCards" EntityType="GamesDBModel.Store.TestCards" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards" EntityType="GamesDBModel.Store.Cards" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards_Asset" EntityType="GamesDBModel.Store.Cards_Asset" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cards_Spell" EntityType="GamesDBModel.Store.Cards_Spell" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Asset_inherits_Card" Association="GamesDBModel.Store.FK_Asset_inherits_Card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Asset" EntitySet="Cards_Asset" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Spell_inherits_Card" Association="GamesDBModel.Store.FK_Spell_inherits_Card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Spell" EntitySet="Cards_Spell" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TestCards">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CardName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsDrawn" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards_Asset">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Cost" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cards_Spell">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="ReverseText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Asset_inherits_Card">
+    <End Role="Card" Type="GamesDBModel.Store.Cards" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Asset" Type="GamesDBModel.Store.Cards_Asset" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Asset">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Spell_inherits_Card">
+    <End Role="Card" Type="GamesDBModel.Store.Cards" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Spell" Type="GamesDBModel.Store.Cards_Spell" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Spell">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GamesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TestCard">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsDrawn" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="GamesDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TestCards" EntityType="Self.TestCard" />
+          <EntitySet Name="Cards" EntityType="GamesDBModel.Card" />
+          <EntitySet Name="Types" EntityType="GamesDBModel.Type" />
+          </EntityContainer>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asset" BaseType="GamesDBModel.Card" >
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spell" BaseType="GamesDBModel.Card" >
+          <Property Name="ReverseText" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Condition" BaseType="GamesDBModel.Card" >
+          <Property Name="ReverseText" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Artifact" BaseType="GamesDBModel.Card" />
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GamesDBModelStoreContainer" CdmEntityContainer="GamesDBEntities">
+    <EntitySetMapping Name="TestCards">
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.TestCard)">
+        <MappingFragment StoreEntitySet="TestCards">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CardName" ColumnName="CardName" />
+          <ScalarProperty Name="IsDrawn" ColumnName="IsDrawn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cards">
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.Card)">
+        <MappingFragment StoreEntitySet="Cards">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.Asset)">
+        <MappingFragment StoreEntitySet="Cards_Asset">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GamesDBModel.Spell)">
+        <MappingFragment StoreEntitySet="Cards_Spell">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReverseText" ColumnName="ReverseText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
